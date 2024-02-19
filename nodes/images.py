@@ -22,7 +22,7 @@ class LoadImageUrl:
 
 	RETURN_TYPES = ("IMAGE", "MASK")
 	FUNCTION = "load_image_url"
-	CATEGORY = "remote/image"
+	CATEGORY = "ys/image"
 	TITLE = "Load Image (URL)"
 
 	def load_image_url(self, url):
@@ -58,7 +58,7 @@ class SaveImageUrl:
 	RETURN_TYPES = ()
 	OUTPUT_NODE = True
 	FUNCTION = "save_images"
-	CATEGORY = "remote/image"
+	CATEGORY = "ys/image"
 	TITLE = "Save Image (URL)"
 
 	def save_images(self, images, url, data_format, filename_prefix="ComfyUI", prompt=None, extra_pnginfo=None):
@@ -121,7 +121,7 @@ class CombineImageBatch:
 
 
 NODE_CLASS_MAPPINGS = {
-	"LoadImageUrl" : LoadImageUrl,
-	"SaveImageUrl" : SaveImageUrl,
-	"CombineImageBatch" : CombineImageBatch,
+	"YsLoadImageUrl" : LoadImageUrl,
+	"YsSaveImageUrl" : SaveImageUrl,
+	"YsCombineImageBatch" : CombineImageBatch,
 }
