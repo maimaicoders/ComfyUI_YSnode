@@ -79,7 +79,7 @@ class Mynode:
     CATEGORY = "ys/openpose"
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "test"
-
+    TITLE = "OpenseCL"
     def test(self, image, json, scale_factor, descending_parameters):
         # 这里开始处理和画图
         data_2 = json
