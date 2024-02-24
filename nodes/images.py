@@ -16,11 +16,12 @@ class LoadImageUrl:
 	def INPUT_TYPES(s):
 		return {
 			"required": {
-				"url": ("STRING", { "multiline": False, })
+				"url": ("STRING", { "multiline": False, }),
+
 			}
 		}
 
-	RETURN_TYPES = ("IMAGE", "MASK")
+	RETURN_TYPES = ("IMAGE")
 	FUNCTION = "load_image_url"
 	CATEGORY = "ys/image"
 	TITLE = "Load Image (URL)"
