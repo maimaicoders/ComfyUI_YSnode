@@ -80,6 +80,7 @@ class Mynode:
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "test"
     TITLE = "OpenseCL"
+
     def test(self, image, json, scale_factor, descending_parameters):
         # 这里开始处理和画图
         data_2 = json
@@ -132,39 +133,43 @@ class Mynode:
                 black_image = cv2.circle(black_image, pt1, 4, color, thickness=4, lineType=8, shift=0)
                 black_image = cv2.circle(black_image, pt2, 4, color, thickness=4, lineType=8, shift=0)
 
-            kpt_left_hand = np.array(d['hand_left_keypoints_2d']).reshape((21, 3))
-            for q in hand_pairs:
-                pt1 = tuple(list(map(int, kpt_left_hand[q[0], 0:2])))
-                c1 = kpt_left_hand[p[0], 2]
-                pt2 = tuple(list(map(int, kpt_left_hand[q[1], 0:2])))
-                c2 = kpt_left_hand[q[1], 2]
+            kpt_left_hand  = np.array(d['hand_left_keypoints_2d'])
+            if kpt_left_hand.size != 0 and kpt_left_hand.size % 3 == 0 and kpt_left_hand.size / 3 == 21:
+                kpt_left_hand=kpt_left_hand.reshape((21, 3))
+                for q in hand_pairs:
+                    pt1 = tuple(list(map(int, kpt_left_hand[q[0], 0:2])))
+                    c1 = kpt_left_hand[p[0], 2]
+                    pt2 = tuple(list(map(int, kpt_left_hand[q[1], 0:2])))
+                    c2 = kpt_left_hand[q[1], 2]
 
-                color = (0, 0, 0)  # hei色
-                black_image = cv2.circle(black_image, pt1, 4, color, thickness=4, lineType=8, shift=0)
-                black_image = cv2.circle(black_image, pt2, 4, color, thickness=4, lineType=8, shift=0)
+                    color = (0, 0, 0)  # hei色
+                    black_image = cv2.circle(black_image, pt1, 4, color, thickness=4, lineType=8, shift=0)
+                    black_image = cv2.circle(black_image, pt2, 4, color, thickness=4, lineType=8, shift=0)
 
-                if c1 == 0.0 or c2 == 0.0:
-                    continue
+                    if c1 == 0.0 or c2 == 0.0:
+                        continue
 
-                color = tuple(list(map(int, hand_colors[q[0]])))
-                black_image = cv2.line(black_image, pt1, pt2, color, thickness=4)
+                    color = tuple(list(map(int, hand_colors[q[0]])))
+                    black_image = cv2.line(black_image, pt1, pt2, color, thickness=4)
 
-            kpt_right_hand = np.array(d['hand_right_keypoints_2d']).reshape((21, 3))
-            for k in hand_pairs:
-                pt1 = tuple(list(map(int, kpt_right_hand[k[0], 0:2])))
-                c1 = kpt_right_hand[k[0], 2]
-                pt2 = tuple(list(map(int, kpt_right_hand[k[1], 0:2])))
-                c2 = kpt_right_hand[k[1], 2]
+            kpt_right_hand = np.array(d['hand_right_keypoints_2d'])
+            if kpt_right_hand.size != 0 and kpt_right_hand.size % 3 == 0 and kpt_right_hand.size / 3 == 21:
+                kpt_right_hand=kpt_right_hand.reshape((21, 3))
+                for k in hand_pairs:
+                    pt1 = tuple(list(map(int, kpt_right_hand[k[0], 0:2])))
+                    c1 = kpt_right_hand[k[0], 2]
+                    pt2 = tuple(list(map(int, kpt_right_hand[k[1], 0:2])))
+                    c2 = kpt_right_hand[k[1], 2]
 
-                if c1 == 0.0 or c2 == 0.0:
-                    continue
+                    if c1 == 0.0 or c2 == 0.0:
+                        continue
 
-                color = (0, 0, 0)  # 蓝色
-                black_image = cv2.circle(black_image, pt1, 4, color, thickness=4, lineType=8, shift=0)
-                black_image = cv2.circle(black_image, pt2, 4, color, thickness=4, lineType=8, shift=0)
+                    color = (0, 0, 0)  # 蓝色
+                    black_image = cv2.circle(black_image, pt1, 4, color, thickness=4, lineType=8, shift=0)
+                    black_image = cv2.circle(black_image, pt2, 4, color, thickness=4, lineType=8, shift=0)
 
-                color = tuple(list(map(int, hand_colors[q[0]])))
-                black_image = cv2.line(black_image, pt1, pt2, color, thickness=4)
+                    color = tuple(list(map(int, hand_colors[q[0]])))
+                    black_image = cv2.line(black_image, pt1, pt2, color, thickness=4)
 
             # 绘脸
             # 1、脸部轮廓收缩
